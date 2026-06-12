@@ -1,0 +1,259 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.section { margin-bottom: 2rem; }
+.section-title { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px 14px; }
+.card .label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
+.card .value { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+.card .sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+.card .up { color: #3B6D11; } .card .dn { color: #A32D2D; }
+.chart-wrap { position: relative; width: 100%; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 10px; font-size: 12px; color: var(--color-text-secondary); }
+.legend span { display: flex; align-items: center; gap: 5px; }
+.legend .dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 1.5rem 0; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.insight { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; }
+.insight .head { font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+.insight ul { list-style: none; font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; }
+.insight ul li::before { content: "→ "; color: var(--color-text-tertiary); }
+.tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; margin-left: 6px; }
+.tag-warn { background: #FAEEDA; color: #854F0B; }
+.tag-ok { background: #EAF3DE; color: #3B6D11; }
+.tag-info { background: #E6F1FB; color: #185FA5; }
+@media (max-width: 520px) { .row2 { grid-template-columns: 1fr; } }
+</style>
+
+<div style="padding: 1rem 0;">
+
+<div class="section">
+  <div class="section-title">Май 2026 — ключевые показатели (Курчатова)</div>
+  <div class="cards">
+    <div class="card"><div class="label">Выручка</div><div class="value">550 710</div><div class="sub dn">↓ 3% к апрелю</div></div>
+    <div class="card"><div class="label">Поминок</div><div class="value">36</div><div class="sub dn">↓ 28% к апрелю (50)</div></div>
+    <div class="card"><div class="label">Ср. чек поминок</div><div class="value">16 203</div><div class="sub dn">↓ 4% к апрелю</div></div>
+    <div class="card"><div class="label">Лидов (звонков)</div><div class="value">67</div><div class="sub">Calltouch, май</div></div>
+    <div class="card"><div class="label">Конверсия звонок→заказ</div><div class="value">54%</div><div class="sub dn">↓ апрель: 59%</div></div>
+    <div class="card"><div class="label">Бюджет Директ</div><div class="value">16 782</div><div class="sub up">↓ -42% к апрелю</div></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">Динамика поминок по месяцам (Курчатова) — 2025–2026</div>
+  <div class="legend">
+    <span><span class="dot" style="background:#378ADD"></span>Кол-во поминок</span>
+    <span><span class="dot" style="background:#639922"></span>Выручка (тыс. руб.)</span>
+  </div>
+  <div class="chart-wrap" style="height: 260px;">
+    <canvas id="chartMain" role="img" aria-label="Динамика поминок и выручки по месяцам">Динамика поминок: март 31, апрель 32, май 38, июнь 48, июль 29, авг 37, сен 33, окт 43, ноя 41, дек 48, янв 58, фев 39, мар 43, апр 50, май 36.</canvas>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">Источники лидов — май 2026 (67 звонков Calltouch)</div>
+  <div class="legend">
+    <span><span class="dot" style="background:#1D9E75"></span>2ГИС (все форматы)</span>
+    <span><span class="dot" style="background:#378ADD"></span>Яндекс (орг. + cpc)</span>
+    <span><span class="dot" style="background:#BA7517"></span>Я.Карты</span>
+    <span><span class="dot" style="background:#D4537E"></span>Google</span>
+    <span><span class="dot" style="background:#888780"></span>Прочее/direct</span>
+  </div>
+  <div class="chart-wrap" style="height: 230px;">
+    <canvas id="chartSrc" role="img" aria-label="Источники звонков в мае 2026">2ГИС: 29, Яндекс: 16, Я.Карты: 9, Google: 3, direct/прочее: 10.</canvas>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">Трафик по каналам в сводной статистике (апрель 2026 — пик)</div>
+  <div class="legend">
+    <span><span class="dot" style="background:#1D9E75"></span>2ГИС (заявок)</span>
+    <span><span class="dot" style="background:#378ADD"></span>Я.Карты / Гугл</span>
+    <span><span class="dot" style="background:#D85A30"></span>Оффлайн</span>
+    <span><span class="dot" style="background:#7F77DD"></span>Сайт</span>
+    <span><span class="dot" style="background:#888780"></span>Агенты</span>
+  </div>
+  <div class="chart-wrap" style="height: 230px;">
+    <canvas id="chartChannels" role="img" aria-label="Источники заявок по месяцам">Каналы: 2ГИС, карты, офлайн, сайт, агенты.</canvas>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">CTR и расход — Яндекс.Директ май 2026</div>
+  <div class="cards">
+    <div class="card"><div class="label">Поиск</div><div class="value">3.23%</div><div class="sub">CTR · 32 клика · 6 041 руб.</div></div>
+    <div class="card"><div class="label">Товарная кампания</div><div class="value">3.99%</div><div class="sub">1 848 кликов · 7 633 руб.</div></div>
+    <div class="card"><div class="label">МК ручная аудитория</div><div class="value">4.33%</div><div class="sub">23 клика · 3 107 руб.</div></div>
+    <div class="card"><div class="label">Я.Бизнес</div><div class="value">12.13%</div><div class="sub">169 кликов · 6 808 руб. · 33 действия</div></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">2ГИС — динамика показов и кликов (общая карточка «Дружба»)</div>
+  <div class="legend">
+    <span><span class="dot" style="background:#378ADD"></span>Показы</span>
+    <span><span class="dot" style="background:#D85A30"></span>Клики</span>
+    <span><span class="dot" style="background:#639922"></span>Звонки</span>
+  </div>
+  <div class="chart-wrap" style="height: 240px;">
+    <canvas id="chart2gis" role="img" aria-label="Динамика 2ГИС показы, клики, звонки">2ГИС показы по месяцам с марта 2025 по май 2026.</canvas>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">Инсайты и рекомендации</div>
+  <div class="row2">
+    <div class="insight">
+      <div class="head">🔴 Слабые места</div>
+      <ul>
+        <li>Май: —28% поминок к апрелю<span class="tag tag-warn">сезонность?</span></li>
+        <li>Конверсия звонок→заказ упала до 54%</li>
+        <li>Повторные гости: только 5 из 36 в мае<span class="tag tag-warn">13%</span></li>
+        <li>2ГИС май: показы —22% к апрелю</li>
+        <li>Поиск Директ: 9 конверсий за 6 041 руб → 671 руб/лид</li>
+      </ul>
+    </div>
+    <div class="insight">
+      <div class="head">🟢 Что работает</div>
+      <ul>
+        <li>Бюджет снижен на 42%, лидов — столько же<span class="tag tag-ok">эффект</span></li>
+        <li>2ГИС — №1 источник: 27 из 67 звонков</li>
+        <li>Я.Бизнес: CTR 12%, 33 целевых действия</li>
+        <li>Сайт вырос: 33 заявки в апреле vs 3 в январе</li>
+        <li>Товарная кампания: 1 848 кликов за 7 633 руб<span class="tag tag-ok">CPC 4 руб.</span></li>
+      </ul>
+    </div>
+    <div class="insight">
+      <div class="head">🔵 Точки роста — маркетинг</div>
+      <ul>
+        <li>Карточка 2ГИС: добавить фото зала, меню, акцию</li>
+        <li>Программа лояльности для повторных (+скидка)</li>
+        <li>Агентский канал: всего 1 заказ в мае (норма 4–10)</li>
+        <li>Сайт: FAQ, обратный звонок, раздел доставки</li>
+        <li>A/B тест поиска с другой стратегией (план на июнь)</li>
+      </ul>
+    </div>
+    <div class="insight">
+      <div class="head">🟡 Вопросы для глубже</div>
+      <ul>
+        <li>Почему конверсия упала с 59% до 54%?</li>
+        <li>Спам в CRM: 15–20% обращений — чистить базу</li>
+        <li>Кирова и Труда: нет данных по выручке за май</li>
+        <li>Проспект Победы: 2 поминки в мае — потенциал?</li>
+        <li>Коэфф. сезонности май = 0.8 (ниже среднего)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+const labelColor = isDark ? '#aaa' : '#666';
+
+const months = ['мар 25','апр','май','июн','июл','авг','сен','окт','ноя','дек','янв 26','фев','мар','апр','май 26'];
+const counts = [31,32,38,48,29,37,33,43,41,48,58,39,43,50,36];
+const revenue = [633110,573970,550710,825105,452240,792770,805930,884435,775720,775815,1055465,735540,843330,843445,583325].map(v => Math.round(v/1000));
+
+new Chart(document.getElementById('chartMain'), {
+  type: 'bar',
+  data: {
+    labels: months,
+    datasets: [
+      { label: 'Поминок', data: counts, backgroundColor: '#378ADD', yAxisID: 'y', order: 2 },
+      { label: 'Выручка тыс.руб', data: revenue, type: 'line', borderColor: '#639922', backgroundColor: 'transparent', borderWidth: 2, pointRadius: 3, yAxisID: 'y2', order: 1 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: { size: 11 }, autoSkip: false, maxRotation: 45 }, grid: { color: gridColor } },
+      y: { ticks: { color: labelColor, font: { size: 11 } }, grid: { color: gridColor }, title: { display: true, text: 'поминок', color: labelColor, font: { size: 11 } } },
+      y2: { position: 'right', ticks: { color: '#639922', font: { size: 11 } }, grid: { display: false }, title: { display: true, text: 'тыс.руб', color: '#639922', font: { size: 11 } } }
+    }
+  }
+});
+
+new Chart(document.getElementById('chartSrc'), {
+  type: 'bar',
+  data: {
+    labels: ['2ГИС', 'Яндекс (орг+cpc)', 'Я.Карты', 'direct / прочее', 'Google', 'geoadv'],
+    datasets: [{ data: [29, 10, 9, 6, 3, 3], backgroundColor: ['#1D9E75','#378ADD','#BA7517','#888780','#D4537E','#7F77DD'] }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: { size: 11 } }, grid: { color: gridColor } },
+      y: { ticks: { color: labelColor, font: { size: 11 } } }
+    }
+  }
+});
+
+const chMonths = ['янв 26','фев','мар','апр','май 26'];
+new Chart(document.getElementById('chartChannels'), {
+  type: 'bar',
+  data: {
+    labels: chMonths,
+    datasets: [
+      { label: '2ГИС', data: [31,37,44,35,27], backgroundColor: '#1D9E75' },
+      { label: 'Карты/Гугл', data: [22,13,23,54,15], backgroundColor: '#378ADD' },
+      { label: 'Оффлайн', data: [16,7,24,14,10], backgroundColor: '#D85A30' },
+      { label: 'Сайт', data: [3,6,0,33,33], backgroundColor: '#7F77DD' },
+      { label: 'Агенты', data: [6,2,4,4,1], backgroundColor: '#888780' }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { stacked: true, ticks: { color: labelColor }, grid: { color: gridColor } },
+      y: { stacked: true, ticks: { color: labelColor, font: { size: 11 } }, grid: { color: gridColor } }
+    }
+  }
+});
+
+const g2Labels = ['мар 25','апр','май','июн','июл','авг','сен','окт','ноя','дек','янв 26','фев','мар','апр','май 26'];
+const g2Shows = [24221,20616,24228,25214,27932,26867,25052,23875,25399,23917,35105,35792,38570,40827,31947];
+const g2Clicks = [1239,1097,1138,1197,1373,1555,1619,1787,1685,1609,1733,1865,2350,2256,1796];
+const g2Calls = [12,29,29,40,45,45,54,41,55,56,53,58,63,77,43];
+
+new Chart(document.getElementById('chart2gis'), {
+  type: 'line',
+  data: {
+    labels: g2Labels,
+    datasets: [
+      { label: 'Показы', data: g2Shows.map(v => Math.round(v/100)), borderColor: '#378ADD', backgroundColor: 'transparent', borderWidth: 2, pointRadius: 2, yAxisID: 'y' },
+      { label: 'Клики', data: g2Clicks, borderColor: '#D85A30', backgroundColor: 'transparent', borderWidth: 2, pointRadius: 2, yAxisID: 'y2' },
+      { label: 'Звонки', data: g2Calls, borderColor: '#639922', backgroundColor: 'transparent', borderWidth: 2, borderDash: [4,3], pointRadius: 2, yAxisID: 'y2' }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: { size: 11 }, autoSkip: false, maxRotation: 45 }, grid: { color: gridColor } },
+      y: { ticks: { color: '#378ADD', font: { size: 11 }, callback: v => v+'×100' }, grid: { color: gridColor } },
+      y2: { position: 'right', ticks: { color: '#D85A30', font: { size: 11 } }, grid: { display: false } }
+    }
+  }
+});
+</script>
