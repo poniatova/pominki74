@@ -8,6 +8,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ─── ICONS ─── */
+.icon {
+  width: 1em; height: 1em;
+  display: inline-block; vertical-align: -0.125em;
+  flex-shrink: 0;
+}
+.header-cta .icon { width: 15px; height: 15px; }
+
 /* ─── RESET & BASE ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
@@ -61,6 +69,7 @@ a { text-decoration: none; color: inherit; }
   font-size: 13px; font-weight: 600;
   white-space: nowrap;
   transition: background .2s;
+  display: inline-flex; align-items: center; gap: 6px;
 }
 .header-cta:hover { background: var(--gold-lt); }
 .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
@@ -88,77 +97,47 @@ a { text-decoration: none; color: inherit; }
   display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: center;
 }
 
-/* candle flame signature element */
+/* soft glowing light — single warm flame, no candle body */
 .candle-wrap {
-  display: flex; justify-content: center; align-items: flex-end;
+  display: flex; justify-content: center; align-items: center;
   height: 340px; position: relative;
 }
-.candle-body {
-  width: 36px; height: 180px;
-  background: linear-gradient(to bottom, #F0E6D0, #D4C5A9);
-  border-radius: 4px 4px 3px 3px;
-  position: relative; z-index: 2;
-  box-shadow: inset -6px 0 12px rgba(0,0,0,0.12);
+.soft-light {
+  position: relative; width: 160px; height: 160px;
+  display: flex; align-items: center; justify-content: center;
 }
-.candle-body::after {
+.soft-light-halo {
+  position: absolute; width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(255,193,92,0.22) 0%, rgba(201,150,90,0.10) 45%, transparent 75%);
+  animation: halo-pulse 4s ease-in-out infinite;
+}
+.soft-light-core {
+  position: relative; width: 30px; height: 42px;
+  animation: light-flicker 3.4s ease-in-out infinite;
+}
+.soft-light-core::before {
   content: '';
-  position: absolute; top: -2px; left: 50%; transform: translateX(-50%);
-  width: 2px; height: 14px; background: #3A2A1A; border-radius: 1px;
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 75%, #FFF8E2 0%, #FFC766 38%, #E8924A 68%, transparent 100%);
+  border-radius: 50% 50% 30% 30% / 65% 65% 35% 35%;
+  filter: blur(2px);
 }
-.flame {
-  position: absolute; bottom: calc(180px + 2px + 14px); left: 50%;
-  transform: translateX(-50%);
-  width: 20px; height: 34px;
-  animation: flicker 2.4s ease-in-out infinite;
-  z-index: 3;
-}
-.flame-inner {
-  width: 20px; height: 34px;
-  background: radial-gradient(ellipse at 50% 80%, #FFF4C2 0%, #FFAA33 40%, #E06020 75%, transparent 100%);
-  border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
-  filter: blur(1.5px);
-}
-.flame-glow {
-  position: absolute; top: -10px; left: -18px;
-  width: 56px; height: 60px;
-  background: radial-gradient(ellipse, rgba(255,180,60,0.35) 0%, transparent 70%);
-  animation: glow-pulse 2.4s ease-in-out infinite;
-}
-.candle-drips {
-  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-  width: 36px; height: 180px;
-}
-.drip {
-  position: absolute; top: 8px; width: 6px; height: 18px;
-  background: linear-gradient(to bottom, #F0E6D0, #D4C5A9);
-  border-radius: 0 0 4px 4px;
-}
-.drip:nth-child(1) { left: 4px; height: 22px; top: 5px; }
-.drip:nth-child(2) { right: 3px; height: 14px; top: 12px; }
-.candle-plate {
-  width: 80px; height: 12px;
-  background: linear-gradient(to bottom, #B8A898, #9A8E80);
+.soft-light-spark {
+  position: absolute; top: 38%; left: 50%; transform: translate(-50%, -50%);
+  width: 8px; height: 14px;
+  background: radial-gradient(ellipse, #FFFCF2 0%, #FFE3A8 60%, transparent 100%);
   border-radius: 50%;
-  margin: 0 auto;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  position: relative; z-index: 2;
+  filter: blur(0.5px);
 }
-.glow-floor {
-  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 120px; height: 20px;
-  background: radial-gradient(ellipse, rgba(255,160,50,0.25) 0%, transparent 70%);
-  animation: glow-pulse 2.4s ease-in-out infinite;
+@keyframes halo-pulse {
+  0%,100% { opacity: 0.75; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
 }
-@keyframes flicker {
-  0%,100% { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(-1deg); }
-  20% { transform: translateX(-50%) scaleX(0.92) scaleY(1.06) rotate(1.5deg); }
-  40% { transform: translateX(-50%) scaleX(1.05) scaleY(0.97) rotate(-0.5deg); }
-  60% { transform: translateX(-50%) scaleX(0.96) scaleY(1.04) rotate(1deg); }
-  80% { transform: translateX(-50%) scaleX(1.02) scaleY(0.98) rotate(-1.5deg); }
-}
-@keyframes glow-pulse {
-  0%,100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
-  50% { opacity: 1; transform: translateX(-50%) scale(1.12); }
+@keyframes light-flicker {
+  0%,100% { transform: scaleX(1) scaleY(1) rotate(-1deg); }
+  25% { transform: scaleX(0.95) scaleY(1.04) rotate(1deg); }
+  50% { transform: scaleX(1.03) scaleY(0.97) rotate(-0.5deg); }
+  75% { transform: scaleX(0.97) scaleY(1.03) rotate(1.2deg); }
 }
 
 .hero-label {
@@ -246,16 +225,17 @@ section { padding: 80px 5%; }
 .trust-strip-inner {
   max-width: 1100px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 24px;
+  flex-wrap: nowrap; gap: 20px;
 }
 .ts-item {
-  display: flex; align-items: center; gap: 12px;
+  display: flex; align-items: center; gap: 10px;
+  flex: 1; min-width: 0;
 }
 .ts-icon {
   width: 40px; height: 40px; border-radius: 8px;
   background: var(--white); border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px; flex-shrink: 0;
+  font-size: 19px; color: var(--gold); flex-shrink: 0;
 }
 .ts-text strong { display: block; font-size: 14px; font-weight: 600; color: var(--text); }
 .ts-text span { font-size: 12px; color: var(--muted); }
@@ -264,12 +244,12 @@ section { padding: 80px 5%; }
 /* ─── HOW IT WORKS ─── */
 .how { background: var(--white); }
 .steps {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
   margin-top: 52px; position: relative;
 }
 .steps::before {
   content: '';
-  position: absolute; top: 28px; left: calc(12.5% + 14px); right: calc(12.5% + 14px);
+  position: absolute; top: 28px; left: calc(16.6% + 14px); right: calc(16.6% + 14px);
   height: 1px; background: linear-gradient(to right, var(--gold), var(--cream2), var(--gold));
   z-index: 0;
 }
@@ -301,7 +281,10 @@ section { padding: 80px 5%; }
 }
 .pkg-card:hover { box-shadow: var(--shadow); border-color: var(--gold); }
 .pkg-card.featured {
-  border-color: var(--gold);
+  border-top: 4px solid var(--gold);
+  border-bottom: 4px solid var(--gold);
+  border-left: 1.5px solid var(--gold);
+  border-right: 1.5px solid var(--gold);
   box-shadow: 0 8px 40px rgba(201,150,90,0.18);
 }
 .pkg-badge {
@@ -385,6 +368,34 @@ section { padding: 80px 5%; }
 }
 .calc-btn:hover { background: var(--gold-lt); }
 
+/* DISCOUNT BANNER */
+.discount-banner {
+  margin-top: 28px; background: linear-gradient(135deg, #1A2B4A 0%, #0F1F35 100%);
+  border: 1px solid rgba(201,150,90,0.35);
+  border-radius: 14px; padding: 28px 36px;
+  display: flex; align-items: center; gap: 28px; justify-content: space-between;
+}
+.discount-icon {
+  width: 56px; height: 56px; border-radius: 12px; flex-shrink: 0;
+  background: rgba(201,150,90,0.15); border: 1px solid rgba(201,150,90,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; color: var(--gold);
+}
+.discount-text { flex: 1; }
+.discount-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 6px;
+}
+.discount-title span { color: var(--gold); }
+.discount-desc { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; max-width: 560px; }
+.discount-cta {
+  background: var(--gold); color: var(--white);
+  padding: 12px 26px; border-radius: 8px;
+  font-size: 14px; font-weight: 600; white-space: nowrap;
+  transition: background .2s;
+}
+.discount-cta:hover { background: var(--gold-lt); }
+
 /* ─── EXTRAS ─── */
 .extras-grid {
   display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;
@@ -405,7 +416,12 @@ section { padding: 80px 5%; }
   transition: box-shadow .2s;
 }
 .adv-card:hover { box-shadow: var(--shadow); }
-.adv-icon { font-size: 28px; margin-bottom: 14px; }
+.adv-icon {
+  width: 48px; height: 48px; border-radius: 10px;
+  background: var(--white); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: var(--gold); margin-bottom: 14px;
+}
 .adv-card h3 { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
 .adv-card p { font-size: 13px; color: var(--muted); line-height: 1.65; }
 
@@ -427,7 +443,7 @@ section { padding: 80px 5%; }
   width: 30px; height: 30px; border-radius: 6px;
   background: rgba(201,150,90,0.2); border: 1px solid rgba(201,150,90,0.4);
   display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; color: var(--gold); flex-shrink: 0;
+  font-size: 15px; font-weight: 700; color: var(--gold); flex-shrink: 0;
 }
 .delivery-badge-wrap { display: flex; flex-direction: column; gap: 16px; }
 .d-badge {
@@ -508,7 +524,7 @@ section { padding: 80px 5%; }
   display: flex; align-items: center; gap: 10px;
   font-size: 14px; color: var(--muted);
 }
-.loc-feat-icon { font-size: 16px; flex-shrink: 0; }
+.loc-feat-icon { font-size: 17px; color: var(--gold); flex-shrink: 0; width: 20px; display: inline-flex; justify-content: center; }
 .loc-link {
   display: inline-flex; align-items: center; gap: 6px;
   color: var(--gold); font-size: 13px; font-weight: 600;
@@ -578,7 +594,22 @@ section { padding: 80px 5%; }
   margin-top: 4px;
 }
 .form-submit:hover { background: var(--gold-lt); transform: translateY(-1px); }
+.form-submit:disabled { background: var(--border); cursor: not-allowed; transform: none; }
 .form-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 10px; }
+.consent-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin: 16px 0 4px; padding: 14px 16px;
+  background: var(--cream); border-radius: 8px;
+}
+.consent-row input[type="checkbox"] {
+  margin-top: 2px; width: 17px; height: 17px; flex-shrink: 0;
+  accent-color: var(--gold); cursor: pointer;
+}
+.consent-row label {
+  font-size: 13px; color: var(--muted); line-height: 1.6; cursor: pointer;
+}
+.consent-row a { color: var(--gold); border-bottom: 1px solid rgba(201,150,90,0.4); }
+.consent-row a:hover { border-bottom-color: var(--gold); }
 
 .contact-info { padding-top: 8px; }
 .ci-item {
@@ -589,7 +620,7 @@ section { padding: 80px 5%; }
   width: 44px; height: 44px; border-radius: 10px;
   background: var(--cream); border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px; flex-shrink: 0;
+  font-size: 19px; color: var(--gold); flex-shrink: 0;
 }
 .ci-label { font-size: 12px; color: var(--muted); margin-bottom: 3px; }
 .ci-val { font-size: 16px; font-weight: 600; color: var(--navy); }
@@ -658,7 +689,7 @@ footer {
   display: none; text-align: center; padding: 40px 20px;
 }
 .form-success .checkmark {
-  font-size: 48px; margin-bottom: 16px;
+  font-size: 44px; color: #2D7A5F; margin-bottom: 16px;
 }
 .form-success h3 {
   font-family: 'Playfair Display', serif;
@@ -666,23 +697,67 @@ footer {
 }
 .form-success p { font-size: 15px; color: var(--muted); line-height: 1.6; }
 
-/* ─── RESPONSIVE ─── */
+/* ─── GALLERY ─── */
+.gallery { background: var(--cream); }
+.gallery-tabs { display: flex; gap: 10px; margin-top: 48px; margin-bottom: 24px; }
+.gallery-tab {
+  padding: 10px 20px; border-radius: 8px; cursor: pointer;
+  font-size: 14px; font-weight: 500; color: var(--muted);
+  border: 1.5px solid var(--border); background: var(--white);
+  transition: border-color .2s, color .2s;
+}
+.gallery-tab.active { border-color: var(--gold); color: var(--navy); background: var(--white); }
+.gallery-slider-wrap { position: relative; overflow: hidden; border-radius: 14px; }
+.gallery-track { display: flex; transition: transform .4s ease; }
+.gallery-slide {
+  min-width: 100%; aspect-ratio: 16/9;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #E3DCCF, #D4CBB8);
+  position: relative;
+}
+.gallery-slide-label {
+  position: absolute; bottom: 16px; left: 20px;
+  background: rgba(15,31,53,0.7); color: var(--white);
+  font-size: 13px; padding: 6px 14px; border-radius: 6px;
+}
+.gallery-placeholder-icon { font-size: 40px; color: rgba(15,31,53,0.25); }
+.gallery-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.9); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--navy); cursor: pointer;
+  transition: background .2s; z-index: 2;
+}
+.gallery-nav:hover { background: var(--white); }
+.gallery-nav.prev { left: 14px; }
+.gallery-nav.next { right: 14px; }
+.gallery-dots { display: flex; gap: 8px; justify-content: center; margin-top: 16px; }
+.gallery-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); cursor: pointer; transition: background .2s; }
+.gallery-dot.active { background: var(--gold); }
+.gallery-cta { text-align: center; margin-top: 36px; }
+
+
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; }
   .candle-wrap { height: 200px; order: -1; }
-  .candle-body { height: 120px; }
-  .flame { bottom: calc(120px + 16px); }
-  .steps { grid-template-columns: repeat(2, 1fr); }
+  .soft-light { width: 120px; height: 120px; }
+  .soft-light-halo { width: 120px; height: 120px; }
+  .steps { grid-template-columns: 1fr; }
   .steps::before { display: none; }
   .pkg-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
   .calc-wrap { grid-template-columns: 1fr; }
+  .discount-banner { flex-direction: column; text-align: center; }
   .adv-grid { grid-template-columns: repeat(2, 1fr); }
   .reviews-grid { grid-template-columns: 1fr 1fr; }
   .loc-grid { grid-template-columns: 1fr; }
+  .gallery-tabs { flex-wrap: wrap; }
   .contact-inner { grid-template-columns: 1fr; }
   .delivery-grid { grid-template-columns: 1fr; }
   .header-nav { display: none; }
   .burger { display: flex; }
+  .ts-text strong { font-size: 13px; }
+  .ts-text span { display: none; }
 }
 @media (max-width: 600px) {
   section { padding: 56px 5%; }
@@ -698,7 +773,7 @@ footer {
   .float-cta { bottom: 18px; right: 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .flame, .flame-glow, .glow-floor, .float-phone { animation: none; }
+  .soft-light-core, .soft-light-halo, .float-phone { animation: none; }
 }
 </style>
 </head>
@@ -709,12 +784,12 @@ footer {
   <div class="header-logo">Дружба <span>74</span></div>
   <nav class="header-nav">
     <a href="#packages">Меню</a>
-    <a href="#how">Как это работает</a>
+    <a href="#advantages">Преимущества</a>
     <a href="#delivery">Доставка</a>
     <a href="#reviews">Отзывы</a>
     <a href="#contacts">Контакты</a>
   </nav>
-  <a href="tel:+79123162582" class="header-cta">📞 Позвонить</a>
+  <a href="tel:+79123162582" class="header-cta"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></svg> Позвонить</a>
   <div class="burger" onclick="toggleMenu(this)" aria-label="Меню">
     <span></span><span></span><span></span>
   </div>
@@ -724,7 +799,7 @@ footer {
 <div id="mobileNav" style="display:none; position:fixed; top:60px; left:0; right:0; background:var(--navy); z-index:99; padding:24px 5%; border-bottom:1px solid rgba(255,255,255,0.1);">
   <nav style="display:flex; flex-direction:column; gap:18px;">
     <a href="#packages" onclick="closeMobileMenu()" style="color:rgba(255,255,255,0.8); font-size:16px;">Меню и цены</a>
-    <a href="#how" onclick="closeMobileMenu()" style="color:rgba(255,255,255,0.8); font-size:16px;">Как это работает</a>
+    <a href="#advantages" onclick="closeMobileMenu()" style="color:rgba(255,255,255,0.8); font-size:16px;">Преимущества</a>
     <a href="#delivery" onclick="closeMobileMenu()" style="color:rgba(255,255,255,0.8); font-size:16px;">Доставка</a>
     <a href="#reviews" onclick="closeMobileMenu()" style="color:rgba(255,255,255,0.8); font-size:16px;">Отзывы</a>
     <a href="#contacts" onclick="closeMobileMenu()" style="color:rgba(255,255,255,0.8); font-size:16px;">Контакты</a>
@@ -736,7 +811,7 @@ footer {
 <section class="hero" id="home">
   <div class="hero-inner">
     <div class="hero-content">
-      <p class="hero-label">Столовая «Дружба» · Челябинск</p>
+      <p class="hero-label">Сеть столовых «Дружба» · Челябинск</p>
       <h1 class="hero-title">
         Мы возьмём<br>всё на себя —<br>вы <em>будете рядом</em><br>с близкими
       </h1>
@@ -756,7 +831,7 @@ footer {
       </div>
       <div class="hero-trust">
         <div class="trust-item">
-          <div class="trust-num">450+</div>
+          <div class="trust-num">750+</div>
           <div class="trust-lbl">поминок проведено</div>
         </div>
         <div class="trust-item">
@@ -774,20 +849,11 @@ footer {
       </div>
     </div>
     <div class="candle-wrap" aria-hidden="true">
-      <div style="display:flex; flex-direction:column; align-items:center; position:relative;">
-        <div class="flame" style="position:relative;">
-          <div class="flame-glow"></div>
-          <div class="flame-inner"></div>
+      <div class="soft-light">
+        <div class="soft-light-halo"></div>
+        <div class="soft-light-core">
+          <div class="soft-light-spark"></div>
         </div>
-        <div style="position:relative;">
-          <div class="candle-drips">
-            <div class="drip"></div>
-            <div class="drip"></div>
-          </div>
-          <div class="candle-body"></div>
-        </div>
-        <div class="candle-plate"></div>
-        <div class="glow-floor"></div>
       </div>
     </div>
   </div>
@@ -797,7 +863,7 @@ footer {
 <div class="trust-strip">
   <div class="trust-strip-inner">
     <div class="ts-item">
-      <div class="ts-icon">🔒</div>
+      <div class="ts-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 12v.01"/><path d="M3 21h18"/><path d="M5 21v-16a2 2 0 0 1 2 -2h7.5"/><path d="M14 7h5.5a1.5 1.5 0 0 1 1.5 1.5v12.5"/></svg></div>
       <div class="ts-text">
         <strong>Приватный зал</strong>
         <span>Только ваши гости, никаких посторонних</span>
@@ -805,7 +871,7 @@ footer {
     </div>
     <div class="ts-divider"></div>
     <div class="ts-item">
-      <div class="ts-icon">🍽️</div>
+      <div class="ts-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18v-6.815a1 1 0 0 0 -.36 -.928a3 3 0 1 1 4.246 -4.18a4 4 0 0 1 7.348 1.493a3 3 0 0 1 2.557 4.327a1 1 0 0 0 -.43 .908v5.195"/><path d="M6 18h12"/><path d="M6 21h12"/><path d="M6 18a3 3 0 0 1 -2 -2.83"/></svg></div>
       <div class="ts-text">
         <strong>Своя кухня</strong>
         <span>Свежие блюда, готовим в день мероприятия</span>
@@ -813,18 +879,10 @@ footer {
     </div>
     <div class="ts-divider"></div>
     <div class="ts-item">
-      <div class="ts-icon">🚗</div>
+      <div class="ts-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21v-16a1 1 0 0 1 1 -1h6.5a4.5 4.5 0 1 1 0 9h-4.5"/></svg></div>
       <div class="ts-text">
-        <strong>Бесплатная доставка</strong>
-        <span>На кладбище или домой по Челябинску</span>
-      </div>
-    </div>
-    <div class="ts-divider"></div>
-    <div class="ts-item">
-      <div class="ts-icon">💬</div>
-      <div class="ts-text">
-        <strong>Ответим за 10 минут</strong>
-        <span>Ежедневно с 9:00 до 20:00</span>
+        <strong>Бесплатная парковка</strong>
+        <span>Оставляйте машину и присоединяйтесь к церемонии прощания</span>
       </div>
     </div>
   </div>
@@ -834,7 +892,7 @@ footer {
 <section class="how" id="how">
   <div class="container">
     <p class="section-eyebrow">Как это работает</p>
-    <h2 class="section-title">Четыре шага — и всё готово</h2>
+    <h2 class="section-title">Три шага — и всё готово</h2>
     <p class="section-sub">Мы берём на себя организацию, чтобы вы могли сосредоточиться на близких людях.</p>
     <div class="steps">
       <div class="step">
@@ -845,17 +903,12 @@ footer {
       <div class="step">
         <div class="step-num">2</div>
         <h3>Выберите меню</h3>
-        <p>Три готовых пакета или составим меню по вашему пожеланию.</p>
+        <p>Три готовых пакета или составим меню по вашему желанию.</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <h3>Мы всё подготовим</h3>
-        <p>Накроем стол, украсим зал, встретим гостей. Вам не нужно ничего делать.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <h3>Тёплая атмосфера</h3>
-        <p>Внимательный персонал рядом на протяжении всего обеда.</p>
+        <p>Накроем стол, подготовим зал и видеосопровождение на большом экране. Вам не нужно ничего делать.</p>
       </div>
     </div>
   </div>
@@ -960,52 +1013,60 @@ footer {
         <a href="#contacts" class="calc-btn">Забронировать эту дату →</a>
       </div>
     </div>
+
+    <!-- Discount banner -->
+    <div class="discount-banner">
+      <div class="discount-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M19 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 19l14 -14"/></svg></div>
+      <div class="discount-text">
+        <div class="discount-title">Скидка на повторный визит — <span>20%</span></div>
+        <div class="discount-desc">Если проводите поминки 9 дней, 40 дней или год — сообщите нам при бронировании. Мы делаем хорошую скидку постоянным клиентам.</div>
+      </div>
+      <a href="#contacts" class="discount-cta">Забронировать со скидкой</a>
+    </div>
   </div>
 </section>
-
-<!-- ADVANTAGES -->
 <section class="adv" id="advantages">
   <div class="container">
     <p class="section-eyebrow">Почему выбирают нас</p>
     <h2 class="section-title">Всё продумано за вас</h2>
     <div class="adv-grid">
       <div class="adv-card">
-        <div class="adv-icon">🏠</div>
+        <div class="adv-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 12v.01"/><path d="M3 21h18"/><path d="M5 21v-16a2 2 0 0 1 2 -2h7.5"/><path d="M14 7h5.5a1.5 1.5 0 0 1 1.5 1.5v12.5"/></svg></div>
         <h3>Отдельный зал</h3>
         <p>Только ваши гости. Зал закрывается на время мероприятия — никаких посторонних людей.</p>
       </div>
       <div class="adv-card">
-        <div class="adv-icon">💰</div>
+        <div class="adv-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2z"/><path d="M9 8h6"/><path d="M9 12h6"/></svg></div>
         <h3>Без скрытых платежей</h3>
         <p>Никаких пробковых, сервисных и комиссионных сборов. Цена — это цена.</p>
       </div>
       <div class="adv-card">
-        <div class="adv-icon">🥂</div>
+        <div class="adv-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12l-1 9a5 5 0 0 1 -10 0z"/><path d="M12 12v8"/><path d="M9 20h6"/><path d="M6.5 7h11"/></svg></div>
         <h3>Ваши напитки</h3>
         <p>Можно принести любой алкоголь и безалкогольные напитки. Без ограничений.</p>
       </div>
       <div class="adv-card">
-        <div class="adv-icon">🚘</div>
+        <div class="adv-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21v-16a1 1 0 0 1 1 -1h6.5a4.5 4.5 0 1 1 0 9h-4.5"/></svg></div>
         <h3>Удобная парковка</h3>
-        <p>Просторные парковки у обоих адресов. Рядом остановки общественного транспорта.</p>
+        <p>Бесплатные парковки у обоих адресов. Рядом остановки общественного транспорта.</p>
       </div>
       <div class="adv-card">
-        <div class="adv-icon">👩‍🍳</div>
+        <div class="adv-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18v-6.815a1 1 0 0 0 -.36 -.928a3 3 0 1 1 4.246 -4.18a4 4 0 0 1 7.348 1.493a3 3 0 0 1 2.557 4.327a1 1 0 0 0 -.43 .908v5.195"/><path d="M6 18h12"/><path d="M6 21h12"/><path d="M6 18a3 3 0 0 1 -2 -2.83"/></svg></div>
         <h3>Своя кухня</h3>
-        <p>Готовим сами, в день мероприятия. Всегда свежо, тепло и вкусно.</p>
+        <p>Готовим сами в день мероприятия. Всегда только свежие и качественные продукты.</p>
       </div>
       <div class="adv-card">
-        <div class="adv-icon">🤝</div>
+        <div class="adv-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1"/><path d="M15.5 13a2 2 0 1 0 0 -4"/><path d="M17 17.5c1.5 0 3 -.5 3 -1.5s-1 -2 -2.5 -2"/><path d="M8.5 9a2 2 0 1 0 0 -4"/><path d="M7 17.5c-1.5 0 -3 -.5 -3 -1.5s1 -2 2.5 -2"/></svg></div>
         <h3>Внимательный персонал</h3>
-        <p>Администратор Кристина и команда рядом на протяжении всего обеда.</p>
+        <p>Администратор и наша команда рядом на протяжении всего обеда.</p>
       </div>
       <div class="adv-card">
-        <div class="adv-icon">📍</div>
+        <div class="adv-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></svg></div>
         <h3>Два района города</h3>
         <p>Центральный район (Курчатова) и Калининский (Кирова). Выберите ближайший.</p>
       </div>
       <div class="adv-card">
-        <div class="adv-icon">📦</div>
+        <div class="adv-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M3 17h2m4 0h6m4 0h2v-6h-7v-5h-7a2 2 0 0 0 -2 2v9"/><path d="M16 6h2l3 5"/></svg></div>
         <h3>Навынос и доставка</h3>
         <p>Можно забрать с собой или заказать бесплатную доставку на кладбище или домой.</p>
       </div>
@@ -1022,10 +1083,9 @@ footer {
         <h2 class="section-title" style="color:var(--white);">Поминальный обед<br>туда, где нужно</h2>
         <p class="section-sub" style="color:rgba(255,255,255,0.6);">Не всегда можно собраться в зале. Привезём горячие блюда на кладбище или домой — всё будет готово к нужному времени.</p>
         <ul class="delivery-list">
-          <li><div class="d-num">✓</div>Доставка по всему Челябинску — бесплатно</li>
-          <li><div class="d-num">✓</div>Блюда приезжают горячими, в контейнерах с крышками</li>
-          <li><div class="d-num">✓</div>Одноразовая посуда в комплекте — ничего не нужно покупать</li>
-          <li><div class="d-num">✓</div>Можно заказать доставку без бронирования зала</li>
+          <li><div class="d-num"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg></div>Доставка по Челябинску — бесплатно при заказе от 10 000 руб.</li>
+          <li><div class="d-num"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg></div>Блюда приезжают горячими, в контейнерах с крышками</li>
+          <li><div class="d-num"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg></div>Быстро. От заказа до доставки всего несколько часов</li>
         </ul>
         <a href="tel:+79123162582" class="btn-primary" style="margin-top:28px; display:inline-flex;">Заказать доставку</a>
       </div>
@@ -1055,7 +1115,7 @@ footer {
     <div class="reviews-grid">
       <div class="review-card">
         <div class="stars">★★★★★</div>
-        <p class="review-text">«Организовали поминальный обед в феврале. Кристина помогла со всем — меню, рассадкой, временем. Гости были приятно удивлены домашней едой и тихой обстановкой. Спасибо за поддержку в тяжёлый момент.»</p>
+        <p class="review-text">«Очень профессионально, индивидуальный подход! Организовали всё на высшем уровне… вкусная еда, удобное расположение. Особая благодарность организатору Кристине!»</p>
         <div class="review-author">
           <div class="review-avatar">ЕК</div>
           <div>
@@ -1066,18 +1126,18 @@ footer {
       </div>
       <div class="review-card">
         <div class="stars">★★★★★</div>
-        <p class="review-text">«Делали поминки и 9 дней — в оба раза остались очень довольны. Отдельный зал, уютно, вкусно, девочки вежливые. Сделали хорошую скидку за повторный визит. Искренне рекомендую.»</p>
+        <p class="review-text">«Чистое и очень уютное кафе. Девочки очень вежливые! Проводили поминки и 9 дней — сделали хорошую скидку. Очень вкусно и прекрасная отдельная комната для семьи. Спасибо вам огромное!»</p>
         <div class="review-author">
           <div class="review-avatar">НД</div>
           <div>
-            <div class="review-name">Наталья Дубровская</div>
+            <div class="review-name">Наталия Дубровская</div>
             <div class="review-date">Май 2025 · 2ГИС</div>
           </div>
         </div>
       </div>
       <div class="review-card">
         <div class="stars">★★★★★</div>
-        <p class="review-text">«Закрыли для нас всю столовую, коллектив очень вежливый, приятные цены. Спасибо за понимание и отличный сервис — в такое время это особенно важно.»</p>
+        <p class="review-text">«Организовывали поминальный обед в январе. Закрыли для нас столовую, коллектив очень вежливый, приятные цены, спасибо за понимание и отличный сервис — рекомендую.»</p>
         <div class="review-author">
           <div class="review-avatar">МБ</div>
           <div>
@@ -1088,7 +1148,7 @@ footer {
       </div>
       <div class="review-card">
         <div class="stars">★★★★★</div>
-        <p class="review-text">«Отдельный зал, организация чёткая и прозрачная. Цены понятны сразу — никаких дополнительных сборов. Красиво и вкусно. Персонал тактичный и ненавязчивый.»</p>
+        <p class="review-text">«Отдельный зал внутри действующей столовой. Организация чёткая и прозрачная. Цены понятны сразу — никаких дополнительных сборов. Красиво и вкусно.»</p>
         <div class="review-author">
           <div class="review-avatar">AT</div>
           <div>
@@ -1099,7 +1159,7 @@ footer {
       </div>
       <div class="review-card">
         <div class="stars">★★★★★</div>
-        <p class="review-text">«Провели поминки 9 дней у мамы. Коллектив сработал замечательно — кухня вкусная, чисто, уютно, отдельный зал. Мы обязательно придём ещё на сорокодневные.»</p>
+        <p class="review-text">«Сегодня у моей мамы было 9 дней, делали обед в столовой «Дружба». Девочки на кухне приготовили очень вкусно, в кафе чисто и уютно. Спасибо что есть отдельный зал — мы к вам обязательно придём ещё.»</p>
         <div class="review-author">
           <div class="review-avatar">ГЛ</div>
           <div>
@@ -1110,7 +1170,7 @@ footer {
       </div>
       <div class="review-card">
         <div class="stars">★★★★★</div>
-        <p class="review-text">«Хочу выразить огромную благодарность Кристине — организован обед идеально. Гости довольны и едой, и обслуживанием. Всё выполняли быстро и с уважением.»</p>
+        <p class="review-text">«Хочу выразить огромную благодарность администратору Кристине. Прощальный обед организован идеально, персонал отзывчивый и ответственный. Гости довольны и едой, и обслуживанием!»</p>
         <div class="review-author">
           <div class="review-avatar">ЕШ</div>
           <div>
@@ -1124,8 +1184,8 @@ footer {
       <div class="reviews-total">
         <span>★★★★★</span>
         <strong>5.0</strong>
-        <span>· Более 60 отзывов в 2ГИС ·</span>
-        <a href="https://go.2gis.com/w8BuM" target="_blank" style="color:var(--gold); font-weight:600;">Читать все →</a>
+        <span>· 13 оценок, 12 отзывов в 2ГИС ·</span>
+        <a href="https://2gis.ru/chelyabinsk/firm/70000001095377145/tab/reviews" target="_blank" style="color:var(--gold); font-weight:600;">Читать все →</a>
       </div>
     </div>
   </div>
@@ -1147,12 +1207,12 @@ footer {
         </div>
         <div class="loc-body">
           <div class="loc-features">
-            <div class="loc-feat"><span class="loc-feat-icon">🚪</span> 2 приватных зала — один полностью закрытый</div>
-            <div class="loc-feat"><span class="loc-feat-icon">🚗</span> Большая бесплатная парковка</div>
-            <div class="loc-feat"><span class="loc-feat-icon">🚌</span> 5 мин пешком — перекрёстки Курчатова/Воровского</div>
-            <div class="loc-feat"><span class="loc-feat-icon">👥</span> Вместимость: от 10 до 90 гостей</div>
+            <div class="loc-feat"><span class="loc-feat-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 12v.01"/><path d="M3 21h18"/><path d="M5 21v-16a2 2 0 0 1 2 -2h7.5"/><path d="M14 7h5.5a1.5 1.5 0 0 1 1.5 1.5v12.5"/></svg></span> 2 приватных зала — один полностью закрытый</div>
+            <div class="loc-feat"><span class="loc-feat-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21v-16a1 1 0 0 1 1 -1h6.5a4.5 4.5 0 1 1 0 9h-4.5"/></svg></span> Большая бесплатная парковка</div>
+            <div class="loc-feat"><span class="loc-feat-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 4m-1.5 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0"/><path d="M7 21l3 -4"/><path d="M16 21l-2 -4l-3 -3l1 -5"/><path d="M6 12l2 -3l3.5 1l2.5 4l3 2"/></svg></span> 5 мин пешком — перекрёстки Курчатова/Воровского</div>
+            <div class="loc-feat"><span class="loc-feat-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg></span> Вместимость: от 10 до 90 гостей</div>
           </div>
-          <a href="https://go.2gis.com/w8BuM" target="_blank" class="loc-link">Открыть на карте 2ГИС →</a>
+          <a href="https://2gis.ru/chelyabinsk/firm/70000001095377145" target="_blank" class="loc-link">Открыть на карте 2ГИС →</a>
         </div>
       </div>
       <div class="loc-card">
@@ -1165,14 +1225,44 @@ footer {
         </div>
         <div class="loc-body">
           <div class="loc-features">
-            <div class="loc-feat"><span class="loc-feat-icon">☀️</span> Светлый и просторный зал</div>
-            <div class="loc-feat"><span class="loc-feat-icon">🚗</span> Большая парковка рядом</div>
-            <div class="loc-feat"><span class="loc-feat-icon">👥</span> Вместимость: от 10 до 30 гостей</div>
-            <div class="loc-feat"><span class="loc-feat-icon">📍</span> Удобное расположение в Калининском районе</div>
+            <div class="loc-feat"><span class="loc-feat-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg></span> Светлый и просторный зал</div>
+            <div class="loc-feat"><span class="loc-feat-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21v-16a1 1 0 0 1 1 -1h6.5a4.5 4.5 0 1 1 0 9h-4.5"/></svg></span> Большая парковка рядом</div>
+            <div class="loc-feat"><span class="loc-feat-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg></span> Вместимость: от 10 до 30 гостей</div>
+            <div class="loc-feat"><span class="loc-feat-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></svg></span> Удобное расположение в Калининском районе</div>
           </div>
-          <a href="https://go.2gis.com/w8BuM" target="_blank" class="loc-link">Открыть на карте 2ГИС →</a>
+          <a href="https://2gis.ru/chelyabinsk/firm/70000001095377145" target="_blank" class="loc-link">Открыть на карте 2ГИС →</a>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <p class="section-eyebrow">Фотогалерея</p>
+    <h2 class="section-title">Посмотрите на залы</h2>
+    <p class="section-sub">Фото залов и сервировки на обоих адресах — чтобы вы заранее знали, куда приедете.</p>
+
+    <div class="gallery-tabs">
+      <div class="gallery-tab active" id="tabKurchatova" onclick="switchGallery('kurchatova', this)">ул. Курчатова, 28Б</div>
+      <div class="gallery-tab" id="tabKirova" onclick="switchGallery('kirova', this)">ул. Кирова, 1</div>
+    </div>
+
+    <div class="gallery-slider-wrap">
+      <div class="gallery-track" id="galleryTrack">
+        <div class="gallery-slide"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="font-size:40px;color:rgba(15,31,53,0.25);"><path d="M15 8m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M4 4m0 3a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3z"/><path d="M4 15l4 -4c.928 -.893 2.072 -.893 3 0l4 4"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l2 2"/></svg><div class="gallery-slide-label">Общий вид зала</div></div>
+        <div class="gallery-slide"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="font-size:40px;color:rgba(15,31,53,0.25);"><path d="M15 8m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M4 4m0 3a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3z"/><path d="M4 15l4 -4c.928 -.893 2.072 -.893 3 0l4 4"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l2 2"/></svg><div class="gallery-slide-label">Накрытый стол</div></div>
+        <div class="gallery-slide"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="font-size:40px;color:rgba(15,31,53,0.25);"><path d="M15 8m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M4 4m0 3a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3z"/><path d="M4 15l4 -4c.928 -.893 2.072 -.893 3 0l4 4"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l2 2"/></svg><div class="gallery-slide-label">Сервировка</div></div>
+        <div class="gallery-slide"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="font-size:40px;color:rgba(15,31,53,0.25);"><path d="M15 8m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M4 4m0 3a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3z"/><path d="M4 15l4 -4c.928 -.893 2.072 -.893 3 0l4 4"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l2 2"/></svg><div class="gallery-slide-label">Вход в зал</div></div>
+      </div>
+      <div class="gallery-nav prev" onclick="galleryMove(-1)" role="button" aria-label="Предыдущее фото"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6"/></svg></div>
+      <div class="gallery-nav next" onclick="galleryMove(1)" role="button" aria-label="Следующее фото"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6l-6 6"/></svg></div>
+    </div>
+    <div class="gallery-dots" id="galleryDots"></div>
+
+    <div class="gallery-cta">
+      <a href="#contacts" class="btn-primary" style="display:inline-flex;">Забронировать зал</a>
     </div>
   </div>
 </section>
@@ -1202,7 +1292,7 @@ footer {
           Как быстро можно забронировать дату?
           <div class="faq-icon">+</div>
         </div>
-        <div class="faq-a">Позвоните нам или напишите в Telegram — ответим в течение 10 минут. Бронирование подтверждаем в тот же день. Принимаем заявки ежедневно с 9:00 до 20:00.</div>
+        <div class="faq-a">Позвоните нам — ответим в течение 10 минут. Бронирование подтверждаем в тот же день. Принимаем заявки ежедневно с 9:00 до 20:00.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">
@@ -1286,11 +1376,15 @@ footer {
             <label for="fComment">Пожелания или вопросы</label>
             <textarea id="fComment" placeholder="Особые блюда, аллергии, время начала, другие детали..."></textarea>
           </div>
-          <button class="form-submit" onclick="submitForm()">Отправить заявку — перезвоним за 15 минут</button>
-          <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных</p>
+          <div class="consent-row">
+            <input type="checkbox" id="fConsent" onchange="toggleSubmit()">
+            <label for="fConsent">Согласен с <a href="privacy-policy.html" target="_blank">обработкой персональных данных</a></label>
+          </div>
+          <button class="form-submit" id="submitBtn" onclick="submitForm()" disabled>Отправить заявку — перезвоним за 15 минут</button>
+          <p class="form-note">Поставьте галочку согласия, чтобы отправить заявку</p>
         </div>
         <div class="form-success" id="formSuccess">
-          <div class="checkmark">🕯️</div>
+          <div class="checkmark"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg></div>
           <h3>Заявка принята</h3>
           <p>Мы свяжемся с вами в течение 15 минут.<br>Если срочно — позвоните: <a href="tel:+79123162582" style="color:var(--gold);">+7(912) 316-25-82</a></p>
         </div>
@@ -1298,29 +1392,28 @@ footer {
       <div class="contact-info">
         <p class="section-eyebrow" style="margin-bottom:24px;">Или свяжитесь напрямую</p>
         <div class="ci-item">
-          <div class="ci-icon">📞</div>
+          <div class="ci-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></svg></div>
           <div>
             <div class="ci-label">Телефон</div>
             <div class="ci-val"><a href="tel:+79123162582">+7 (912) 316-25-82</a></div>
           </div>
         </div>
         <div class="ci-item">
-          <div class="ci-icon">🕐</div>
+          <div class="ci-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M12 7v5l3 3"/></svg></div>
           <div>
             <div class="ci-label">Режим работы</div>
             <div class="ci-val">Ежедневно, 9:00 — 20:00</div>
           </div>
         </div>
         <div class="ci-item">
-          <div class="ci-icon">📍</div>
+          <div class="ci-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></svg></div>
           <div>
             <div class="ci-label">Адреса</div>
             <div class="ci-val" style="font-size:14px; line-height:1.6;">ул. Курчатова, 28Б<br>ул. Кирова, 1</div>
           </div>
         </div>
         <div class="messengers">
-          <a href="tel:+79123162582" class="msg-btn msg-ph">📞 Позвонить</a>
-          <a href="https://t.me/Dryjba2025?text=Здравствуйте!%20Хочу%20забронировать%20поминальный%20обед." target="_blank" class="msg-btn msg-tg">✈ Telegram</a>
+          <a href="tel:+79123162582" class="msg-btn msg-ph" style="flex:none; width:100%;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></svg> Позвонить</a>
         </div>
         <div style="margin-top:28px; padding:20px; background:var(--cream); border-radius:10px; border:1px solid var(--border);">
           <p style="font-size:13px; color:var(--muted); line-height:1.7;">
@@ -1349,8 +1442,7 @@ footer {
 
 <!-- FLOATING CTA -->
 <div class="float-cta">
-  <a href="https://t.me/Dryjba2025?text=Здравствуйте!%20Хочу%20забронировать%20поминальный%20обед." target="_blank" class="float-tg" title="Написать в Telegram">✈</a>
-  <a href="tel:+79123162582" class="float-phone" title="Позвонить">📞</a>
+  <a href="tel:+79123162582" class="float-phone" title="Позвонить"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></svg></a>
 </div>
 
 <script>
@@ -1371,9 +1463,20 @@ function toggleFaq(el) {
 }
 
 // Form
+function toggleSubmit() {
+  const consent = document.getElementById('fConsent').checked;
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = !consent;
+}
+
 function submitForm() {
   const name = document.getElementById('fName').value.trim();
   const phone = document.getElementById('fPhone').value.trim();
+  const consent = document.getElementById('fConsent').checked;
+  if (!consent) {
+    alert('Пожалуйста, подтвердите согласие на обработку персональных данных.');
+    return;
+  }
   if (!name || !phone) {
     alert('Пожалуйста, укажите имя и номер телефона.');
     return;
@@ -1407,6 +1510,49 @@ window.addEventListener('scroll', () => {
       ? 'var(--gold)' : 'rgba(255,255,255,0.7)';
   });
 });
+// Gallery
+const galleryData = {
+  kurchatova: ['Общий вид зала', 'Накрытый стол', 'Сервировка', 'Вход в зал'],
+  kirova: ['Общий вид зала', 'Накрытый стол', 'Фасад здания']
+};
+let galleryState = 'kurchatova';
+let galleryIndex = 0;
+
+function renderGallery() {
+  const track = document.getElementById('galleryTrack');
+  const dotsWrap = document.getElementById('galleryDots');
+  const slides = galleryData[galleryState];
+  track.innerHTML = slides.map(label => `
+    <div class="gallery-slide">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="font-size:40px;color:rgba(15,31,53,0.25);"><path d="M15 8m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M4 4m0 3a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3z"/><path d="M4 15l4 -4c.928 -.893 2.072 -.893 3 0l4 4"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l2 2"/></svg>
+      <div class="gallery-slide-label">${label}</div>
+    </div>`).join('');
+  dotsWrap.innerHTML = slides.map((_, i) =>
+    `<div class="gallery-dot${i === galleryIndex ? ' active' : ''}" onclick="galleryGoTo(${i})"></div>`
+  ).join('');
+  track.style.transform = `translateX(-${galleryIndex * 100}%)`;
+}
+
+function switchGallery(loc, el) {
+  galleryState = loc;
+  galleryIndex = 0;
+  document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderGallery();
+}
+
+function galleryMove(dir) {
+  const max = galleryData[galleryState].length - 1;
+  galleryIndex = Math.min(max, Math.max(0, galleryIndex + dir));
+  renderGallery();
+}
+
+function galleryGoTo(i) {
+  galleryIndex = i;
+  renderGallery();
+}
+
+renderGallery();
 </script>
 </body>
 </html>
