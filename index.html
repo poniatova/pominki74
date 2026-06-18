@@ -104,22 +104,19 @@ a { text-decoration: none; color: inherit; }
 }
 .hero-inner {
   max-width: 1100px; margin: 0 auto; width: 100%;
-  display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: center;
+  display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: stretch;
 }
 
 /* soft glowing light — single warm flame, no candle body */
 .candle-wrap {
-  display: flex; justify-content: center; align-items: center;
-  height: 340px; position: relative;
-  align-self: stretch;
+  display: flex; justify-content: center; align-items: flex-end;
+  position: relative;
+}
 }
 .hero-image {
   width: 100%; max-width: 320px; height: 480px;
   object-fit: cover; object-position: top;
   border-radius: 14px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
 }
 .soft-light {
   position: relative; width: 160px; height: 160px;
