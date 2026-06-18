@@ -200,10 +200,13 @@ object-fit: cover; border-radius: 14px;
   display: inline-flex; align-items: center; gap: 8px;
 }
 .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+.trust-section {
+  background: var(--navy2);
+  padding: 32px 5%;
+}
 .hero-trust {
-  margin-top: 48px; padding-top: 28px;
-  border-top: 1px solid rgba(255,255,255,0.10);
   display: flex; gap: 36px; flex-wrap: wrap;
+  justify-content: center;
 }
 .trust-item { display: flex; flex-direction: column; gap: 2px; }
 .trust-num {
@@ -889,30 +892,33 @@ footer {
         <a href="#contacts" class="btn-primary">Забронировать дату</a>
         <a href="#packages" class="btn-outline">Посмотреть меню</a>
       </div>
-      <div class="hero-trust">
-        <div class="trust-item">
-          <div class="trust-num">750+</div>
-          <div class="trust-lbl">поминок проведено</div>
-        </div>
-        <div class="trust-item">
-          <div class="trust-num">5.0 ★</div>
-          <div class="trust-lbl">рейтинг в 2ГИС</div>
-        </div>
-        <div class="trust-item">
-          <div class="trust-num">2</div>
-          <div class="trust-lbl">адреса в городе</div>
-        </div>
-        <div class="trust-item">
-          <div class="trust-num">0 ₽</div>
-          <div class="trust-lbl">аренда зала</div>
-        </div>
-      </div>
     </div>
 <div class="candle-wrap" aria-hidden="true">
   <img src="hero-light.png" alt="" class="hero-image">
 </div>
 </section>
-
+<section class="trust-section">
+  <div class="container">
+    <div class="hero-trust">
+      <div class="trust-item">
+        <div class="trust-num">750+</div>
+        <div class="trust-lbl">поминок проведено</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-num">5.0 ★</div>
+        <div class="trust-lbl">рейтинг в 2ГИС</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-num">2</div>
+        <div class="trust-lbl">адреса в городе</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-num">0 ₽</div>
+        <div class="trust-lbl">аренда зала</div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- TRUST STRIP -->
 <div class="trust-strip">
   <div class="trust-strip-inner">
