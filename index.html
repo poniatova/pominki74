@@ -56,6 +56,16 @@ a { text-decoration: none; color: inherit; }
   letter-spacing: 0.01em;
 }
 .header-logo span { color: var(--gold); }
+.header-info {
+  display: flex; flex-direction: column; gap: 1px;
+  font-size: 11px; line-height: 1.4;
+  color: rgba(255,255,255,0.65);
+  text-align: right;
+  margin-right: 16px;
+}
+.header-info span:first-child {
+  color: var(--gold); font-weight: 600; font-size: 12px;
+}
 .header-nav { display: flex; gap: 28px; }
 .header-nav a {
   font-size: 13px; color: rgba(255,255,255,0.7);
@@ -759,6 +769,7 @@ footer {
   .delivery-grid { grid-template-columns: 1fr; }
   .header-nav { display: none; }
   .burger { display: flex; }
+  .header-info { display: none; }
   .ts-text strong { font-size: 13px; }
   .ts-text span { display: none; }
 }
@@ -974,7 +985,7 @@ footer {
 
     <!-- Extras -->
     <div style="margin-top:36px;">
-      <p style="font-size:14px; color:var(--muted); margin-bottom:12px; font-weight:500;">Можно дополнить стол:</p>
+      <p style="font-size:14px; color:var(--muted); margin-bottom:12px; font-weight:700;">Можно дополнить стол:</p>
       <div class="extras-grid">
         <span class="extra-tag">Сельдь с картофелем</span>
         <span class="extra-tag">Мясное ассорти</span>
@@ -1013,7 +1024,7 @@ footer {
         <div class="calc-result-lbl">Итоговая стоимость</div>
         <div class="calc-amount" id="calcResult">15 000 ₽</div>
         <div class="calc-amount-note">Без аренды зала · Без скрытых платежей</div>
-        <a href="#contacts" class="calc-btn">Забронировать эту дату →</a>
+        <a href="#contacts" class="calc-btn">Забронировать →</a>
       </div>
     </div>
 
@@ -1022,7 +1033,7 @@ footer {
       <div class="discount-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M19 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 19l14 -14"/></svg></div>
       <div class="discount-text">
         <div class="discount-title">Скидка на повторный визит — <span>20%</span></div>
-        <div class="discount-desc">Если проводите поминки 9 дней, 40 дней или год — сообщите нам при бронировании. Мы делаем хорошую скидку постоянным клиентам.</div>
+        <div class="discount-desc">Если проводите поминки 9 дней, 40 дней или год — сообщите нам при бронировании. Мы сделаем вам скидку.</div>
       </div>
       <a href="#contacts" class="discount-cta">Забронировать со скидкой</a>
     </div>
@@ -1090,6 +1101,10 @@ footer {
           <li><div class="d-num"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg></div>Блюда приезжают горячими, в контейнерах с крышками</li>
           <li><div class="d-num"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg></div>Быстро. От заказа до доставки всего несколько часов</li>
         </ul>
+        <div class="header-info">
+  <span>+7 (912) 316-25-82</span>
+  <span>Курчатова, 28Б · Кирова, 1</span>
+</div>
         <a href="tel:+79123162582" class="btn-primary" style="margin-top:28px; display:inline-flex;">Заказать доставку</a>
       </div>
       <div class="delivery-badge-wrap">
