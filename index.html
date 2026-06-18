@@ -408,7 +408,45 @@ section { padding: 80px 5%; }
   transition: background .2s;
 }
 .discount-cta:hover { background: var(--gold-lt); }
-
+/* DISCOUNT POPUP */
+.popup-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(15,31,53,0.55);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+.popup-overlay.show { display: flex; }
+.popup-box {
+  background: var(--white); border-radius: 16px;
+  padding: 40px 36px; max-width: 420px; width: 100%;
+  position: relative; text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.popup-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--cream); border: none;
+  font-size: 20px; color: var(--muted); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.popup-close:hover { background: var(--border); }
+.popup-icon { font-size: 40px; margin-bottom: 16px; }
+.popup-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px; font-weight: 700; color: var(--navy);
+  margin-bottom: 12px;
+}
+.popup-title span { color: var(--gold); }
+.popup-desc {
+  font-size: 14px; color: var(--muted); line-height: 1.6;
+  margin-bottom: 24px;
+}
+.popup-cta {
+  display: inline-block; background: var(--gold); color: var(--white);
+  padding: 13px 28px; border-radius: 8px;
+  font-size: 15px; font-weight: 600;
+}
 /* ─── EXTRAS ─── */
 .extras-grid {
   display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;
@@ -1458,13 +1496,31 @@ footer {
     <div class="footer-copy">© 2025 Поминки74.ру · Челябинск</div>
   </div>
 </footer>
-
+<!-- DISCOUNT POPUP -->
+<div class="popup-overlay" id="popupOverlay" onclick="closePopup(event)">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup()">×</button>
+    <div class="popup-icon">🎁</div>
+    <div class="popup-title">Скидка на повторный визит — <span>20%</span></div>
+    <div class="popup-desc">Если проводите поминки 9 дней, 40 дней или год — сообщите нам при бронировании. Мы сделаем вам скидку.</div>
+    <a href="#contacts" class="popup-cta" onclick="closePopup()">Забронировать со скидкой</a>
+  </div>
+</div>
 <!-- FLOATING CTA -->
 <div class="float-cta">
   <a href="tel:+79123162582" class="float-phone" title="Позвонить"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></svg></a>
 </div>
 
 <script>
+  // Discount popup
+function closePopup(event) {
+  if (event && event.target !== event.currentTarget) return;
+  document.getElementById('popupOverlay').classList.remove('show');
+}
+setTimeout(() => {
+  document.getElementById('popupOverlay').classList.add('show');
+}, 3000);
+  
 // Calc
 function calcTotal() {
   const pkg = parseInt(document.getElementById('cPkg').value) || 750;
