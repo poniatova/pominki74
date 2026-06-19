@@ -108,11 +108,10 @@ a { text-decoration: none; color: inherit; }
 }
 /* soft glowing light — single warm flame, no candle body */
 .hero-image {
-  width: 100%; max-width: 320px; height: 480px;
+  width: 100%; max-width: 384px; height: 576px;
   object-fit: cover; object-position: top;
-  border-radius: 14px;
--webkit-mask-image: radial-gradient(ellipse 60% 70% at center, black 30%, transparent 75%);
-mask-image: radial-gradient(ellipse 60% 70% at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 70% at center, black 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 60% 70% at center, black 30%, transparent 75%);
 }
 .soft-light {
   position: relative; width: 160px; height: 160px;
