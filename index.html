@@ -109,16 +109,17 @@ a { text-decoration: none; color: inherit; }
 
 /* soft glowing light — single warm flame, no candle body */
 .candle-wrap {
-  display: contents;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 .hero-image {
-  width: 320px;
-  object-fit: cover; object-position: top;
+  width: 100%;
+  max-width: 320px;
+  height: 600px;
+  object-fit: cover;
+  object-position: top;
   border-radius: 14px;
-  position: absolute;
-  right: 5%;
-  bottom: 0;
-  top: 100px;
 }
 .soft-light {
   position: relative; width: 160px; height: 160px;
