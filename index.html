@@ -103,21 +103,17 @@ a { text-decoration: none; color: inherit; }
 }
 .hero-inner {
   max-width: 1100px; margin: 0 auto; width: 100%;
-  display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: stretch;
-  flex: 1;
+  position: relative;
+  min-height: 1px;
 }
 
 /* soft glowing light — single warm flame, no candle body */
-.candle-wrap {
-  position: relative;
-  height: 100%;
-}
 .hero-image {
-  max-width: 320px;
   position: absolute;
   bottom: 0;
   right: 0;
-  height: 700px;
+  width: 320px;
+  height: 600px;
   object-fit: cover;
   object-position: top;
   border-radius: 14px;
@@ -803,8 +799,7 @@ footer {
 
 
 @media (max-width: 900px) {
-  .hero-inner { grid-template-columns: 1fr; }
-  .candle-wrap { height: 200px; order: -1; }
+  .hero-content { padding-right: 0; max-width: 100%; }
   .soft-light { width: 120px; height: 120px; }
   .soft-light-halo { width: 120px; height: 120px; }
   .steps { grid-template-columns: 1fr; }
