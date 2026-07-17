@@ -1574,6 +1574,13 @@ function submitForm() {
   btn.disabled = true;
   btn.textContent = 'Отправляем...';
 
+  // Дублируем заявку на почту через сервер (best-effort, не блокирует основную отправку в Telegram)
+  fetch('send.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ name, phone, date, guests, pkg, addr, comment })
+  }).catch(() => {});
+
      fetch('https://api.telegram.org/bot8907503061:AAFZNFA0HIS4wULKAWkiE1N-GS6Bw0pyJvw/sendMessage', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
