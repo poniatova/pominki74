@@ -112,12 +112,24 @@ a { text-decoration: none; color: inherit; }
   max-width: 1100px; margin: 0 auto; width: 100%;
   display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: center;
 }
-/* soft glowing light — single warm flame, no candle body */
+/* minimalist framed photo card — full image visible, no mask/dissolve */
+.candle-wrap {
+  position: relative;
+}
+.candle-wrap::before {
+  content: '';
+  position: absolute; inset: -14px;
+  background: rgba(201,150,90,0.10);
+  border-radius: 24px;
+  z-index: 0;
+}
 .hero-image {
+  position: relative; z-index: 1;
   width: 100%; max-width: 384px; height: 576px;
   object-fit: cover; object-position: top;
-  -webkit-mask-image: radial-gradient(ellipse 60% 70% at center, black 30%, transparent 75%);
-  mask-image: radial-gradient(ellipse 60% 70% at center, black 30%, transparent 75%);
+  border-radius: 16px;
+  border: 1px solid rgba(201,150,90,0.3);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
 }
 .soft-light {
   position: relative; width: 160px; height: 160px;
@@ -168,11 +180,24 @@ a { text-decoration: none; color: inherit; }
   color: var(--white); margin-bottom: 20px;
 }
 .hero-title em { color: var(--gold); font-style: normal; }
+.hero-title-sub {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(17px, 1.8vw, 21px);
+  font-weight: 600; font-style: italic; line-height: 1.4;
+  color: var(--gold-lt); margin-bottom: 20px; max-width: 480px;
+}
 .hero-sub {
   font-size: 16px; line-height: 1.7;
   color: rgba(255,255,255,0.68);
   margin-bottom: 36px; max-width: 480px;
 }
+.hero-phone {
+  display: none;
+  align-items: center; gap: 8px;
+  color: var(--white); font-size: 20px; font-weight: 700;
+  margin-bottom: 24px;
+}
+.hero-phone .icon { color: var(--gold); width: 20px; height: 20px; }
 .hero-pills {
   display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px;
 }
@@ -418,45 +443,6 @@ section { padding: 80px 5%; }
   transition: background .2s;
 }
 .discount-cta:hover { background: var(--gold-lt); }
-/* DISCOUNT POPUP */
-.popup-overlay {
-  position: fixed; inset: 0; z-index: 200;
-  background: rgba(15,31,53,0.55);
-  display: none;
-  align-items: center; justify-content: center;
-  padding: 20px;
-}
-.popup-overlay.show { display: flex; }
-.popup-box {
-  background: var(--white); border-radius: 16px;
-  padding: 40px 36px; max-width: 420px; width: 100%;
-  position: relative; text-align: center;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-}
-.popup-close {
-  position: absolute; top: 14px; right: 14px;
-  width: 32px; height: 32px; border-radius: 50%;
-  background: var(--cream); border: none;
-  font-size: 20px; color: var(--muted); cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-}
-.popup-close:hover { background: var(--border); }
-.popup-icon { font-size: 40px; margin-bottom: 16px; }
-.popup-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px; font-weight: 700; color: var(--navy);
-  margin-bottom: 12px;
-}
-.popup-title span { color: var(--gold); }
-.popup-desc {
-  font-size: 14px; color: var(--muted); line-height: 1.6;
-  margin-bottom: 24px;
-}
-.popup-cta {
-  display: inline-block; background: var(--gold); color: var(--white);
-  padding: 13px 28px; border-radius: 8px;
-  font-size: 15px; font-weight: 600;
-}
 /* ─── EXTRAS ─── */
 .extras-grid {
   display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;
@@ -826,6 +812,7 @@ footer {
   .header-info { display: none; }
   .ts-text strong { font-size: 13px; }
   .ts-text span { display: none; }
+  .hero-phone { display: inline-flex; }
 }
 @media (max-width: 600px) {
   section { padding: 56px 5%; }
@@ -908,10 +895,14 @@ footer {
     <div class="hero-content">
       <p class="hero-label">Сеть столовых «Дружба» · Челябинск</p>
       <h1 class="hero-title">
-        Мы возьмём<br>всё на себя —<br>вы <em>будете рядом</em><br>с близкими
+        Поминальные обеды<br>в столовой <em>«Дружба»</em>
       </h1>
+      <p class="hero-title-sub">
+        Мы возьмём всё на себя — вы будете рядом с близкими
+      </p>
+      <a href="tel:+79123162582" class="hero-phone"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></svg> +7 (912) 316-25-82</a>
       <p class="hero-sub">
-        Поминальный обед в отдельном зале — без суеты, без скрытых платежей, 
+        Поминальный обед в отдельном зале — без суеты, без скрытых платежей,
         с домашней кухней. Два адреса в Челябинске, бесплатная доставка.
       </p>
       <div class="hero-pills">
@@ -921,12 +912,13 @@ footer {
         <span class="pill">До 90 гостей</span>
       </div>
       <div class="hero-actions">
-        <a href="#contacts" class="btn-primary">Забронировать дату</a>
+        <a href="#contacts" class="btn-primary" onclick="heroCtaClick(event)">Забронировать дату</a>
         <a href="#packages" class="btn-outline">Посмотреть меню</a>
       </div>
     </div>
+    <!-- TODO: заменить на реальное фото зала/сервировки/еды. Сохранены размеры и object-fit:cover — фото встанет без переверстки. -->
     <div class="candle-wrap" aria-hidden="true">
-      <img src="hero-light3.png" alt="" class="hero-image">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 576'%3E%3Crect width='384' height='576' fill='%23EDE8E0'/%3E%3Cg transform='translate(162,258) scale(2.5)' fill='none' stroke='%23C9965A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 8m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0'/%3E%3Cpath d='M4 4m0 3a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3z'/%3E%3Cpath d='M4 15l4 -4c.928 -.893 2.072 -.893 3 0l4 4'/%3E%3Cpath d='M14 14l1 -1c.928 -.893 2.072 -.893 3 0l2 2'/%3E%3C/g%3E%3C/svg%3E" alt="Фото зала столовой «Дружба» — появится позже" class="hero-image">
     </div>
   </div>
 </section>
@@ -1027,7 +1019,7 @@ footer {
           <li>Морс / компот</li>
           <li>Блин, булочка, мёд, хлеб</li>
         </ul>
-        <a href="#contacts" class="pkg-btn pkg-btn-line">Выбрать этот пакет</a>
+        <a href="#contacts" class="pkg-btn pkg-btn-line" onclick="heroCtaClick(event)">Выбрать этот пакет</a>
       </div>
       <!-- Стандарт -->
       <div class="pkg-card featured">
@@ -1043,7 +1035,7 @@ footer {
           <li>Морс / компот / кисель</li>
           <li>Блин, булочка, мёд, хлеб</li>
         </ul>
-        <a href="#contacts" class="pkg-btn pkg-btn-fill">Выбрать этот пакет</a>
+        <a href="#contacts" class="pkg-btn pkg-btn-fill" onclick="heroCtaClick(event)">Выбрать этот пакет</a>
       </div>
       <!-- Премиум -->
       <div class="pkg-card">
@@ -1058,7 +1050,7 @@ footer {
           <li>Морс / компот / кисель / сок</li>
           <li>Блин, булочка, мёд, хлеб</li>
         </ul>
-        <a href="#contacts" class="pkg-btn pkg-btn-line">Выбрать этот пакет</a>
+        <a href="#contacts" class="pkg-btn pkg-btn-line" onclick="heroCtaClick(event)">Выбрать этот пакет</a>
       </div>
     </div>
 
@@ -1103,7 +1095,7 @@ footer {
         <div class="calc-result-lbl">Итоговая стоимость</div>
         <div class="calc-amount" id="calcResult">15 000 ₽</div>
         <div class="calc-amount-note">Без платы за аренду зала · Без скрытых платежей</div>
-        <a href="#contacts" class="calc-btn">Забронировать →</a>
+        <a href="#contacts" class="calc-btn" onclick="heroCtaClick(event)">Забронировать →</a>
       </div>
     </div>
 
@@ -1355,7 +1347,7 @@ footer {
     <div class="gallery-dots" id="galleryDots"></div>
 
     <div class="gallery-cta">
-      <a href="#contacts" class="btn-primary" style="display:inline-flex;">Забронировать зал</a>
+      <a href="#contacts" class="btn-primary" style="display:inline-flex;" onclick="heroCtaClick(event)">Забронировать зал</a>
     </div>
   </div>
 </section>
@@ -1533,36 +1525,22 @@ footer {
     <div class="footer-copy">© 2025 Поминки74.ру · Челябинск</div>
   </div>
 </footer>
-<!-- DISCOUNT POPUP -->
-<div class="popup-overlay" id="popupOverlay" onclick="closePopup(event)">
-  <div class="popup-box">
-    <button class="popup-close" onclick="closePopup()">×</button>
-    <div class="popup-icon">🎁</div>
-    <div class="popup-title">Скидка на повторный визит — <span>20%</span></div>
-    <div class="popup-desc">Если проводите поминки 9 дней, 40 дней или год — сообщите нам при бронировании. Мы сделаем вам скидку.</div>
-    <a href="#contacts" class="popup-cta" onclick="closePopup()">Забронировать со скидкой</a>
-  </div>
-</div>
 <!-- FLOATING CTA -->
 <div class="float-cta">
   <a href="tel:+79123162582" class="float-phone" title="Позвонить"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></svg></a>
 </div>
 
 <script>
-  // Discount popup
-function closePopup(event) {
-  if (event && event.target !== event.currentTarget) return;
-  document.getElementById('popupOverlay').classList.remove('show');
-}
-setTimeout(() => {
-  const lastShown = localStorage.getItem('popupShownDate');
-  const today = new Date().toDateString();
-  if (lastShown !== today) {
-    document.getElementById('popupOverlay').classList.add('show');
-    localStorage.setItem('popupShownDate', today);
+// На мобильных (совпадает с брейкпоинтом @media max-width:900px) кнопки бронирования
+// ведут на звонок вместо формы. Номер и формат тот же, что уже используется
+// в других tel:-ссылках на странице — под подмену Calltouch (виджет eoyi6pjb).
+function heroCtaClick(e) {
+  if (window.matchMedia('(max-width: 900px)').matches) {
+    e.preventDefault();
+    window.location.href = 'tel:+79123162582';
   }
-}, 3000);
-  
+}
+
 // Calc
 function calcTotal() {
   const pkg = parseInt(document.getElementById('cPkg').value) || 750;
