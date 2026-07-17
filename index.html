@@ -1605,11 +1605,15 @@ function submitForm() {
   btn.disabled = true;
   btn.textContent = 'Отправляем...';
 
-  // Дублируем заявку на почту через сервер (best-effort, не блокирует основную отправку в Telegram)
-  fetch('send.php', {
+  // Дублируем заявку на почту через Web3Forms (best-effort, не блокирует основную отправку в Telegram)
+  fetch('https://api.web3forms.com/submit', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ name, phone, date, guests, pkg, addr, comment })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      access_key: 'ef707617-611d-4bbb-b0d1-7759a42f8855',
+      subject: 'Новая заявка с сайта pominki74.ru',
+      name, phone, date, guests, pkg, addr, comment
+    })
   }).catch(() => {});
 
      fetch('https://api.telegram.org/bot8907503061:AAFZNFA0HIS4wULKAWkiE1N-GS6Bw0pyJvw/sendMessage', {
