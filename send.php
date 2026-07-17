@@ -19,7 +19,7 @@ if (!$name || !$phone) {
     exit;
 }
 
-$to      = 'megaproekt.operdir@gmail.com';
+$to      = 'megaproekt.operdir@gmail.com, ekaterina.poniatova@yandex.ru';
 $subject = '=?UTF-8?B?' . base64_encode('Новая заявка с сайта pominki74.ru') . '?=';
 
 $body  = "Новая заявка с сайта pominki74.ru\n\n";
