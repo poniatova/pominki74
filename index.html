@@ -64,13 +64,10 @@ a { text-decoration: none; color: inherit; }
 .header-logo span { color: var(--gold); }
 .header-info {
   display: flex; flex-direction: column; gap: 1px;
-  font-size: 11px; line-height: 1.4;
+  font-size: 12px; line-height: 1.4;
   color: rgba(255,255,255,0.65);
   text-align: right;
   margin-right: 16px;
-}
-.header-info span:first-child {
-  color: var(--gold); font-weight: 600; font-size: 12px;
 }
 .header-nav { display: flex; gap: 28px; }
 .header-nav a {
@@ -192,12 +189,12 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 36px; max-width: 480px;
 }
 .hero-phone {
-  display: none;
-  align-items: center; gap: 8px;
-  color: var(--white); font-size: 20px; font-weight: 700;
+  display: inline-flex;
+  align-items: center; gap: 10px;
+  color: var(--white); font-size: 28px; font-weight: 700;
   margin-bottom: 24px;
 }
-.hero-phone .icon { color: var(--gold); width: 20px; height: 20px; }
+.hero-phone .icon { color: var(--gold); width: 26px; height: 26px; }
 .hero-pills {
   display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px;
 }
@@ -868,7 +865,6 @@ footer {
     <a href="#contacts">Контакты</a>
   </nav>
   <div class="header-info">
-  <span>+7 (912) 316-25-82</span>
   <span>Курчатова, 28Б · Кирова, 1</span>
 </div>
   <a href="tel:+79123162582" class="header-cta"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></svg> Позвонить</a>
