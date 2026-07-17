@@ -899,7 +899,7 @@ footer {
         <span class="pill">До 90 гостей</span>
       </div>
       <div class="hero-actions">
-        <a href="#contacts" class="btn-primary" onclick="heroCtaClick(event)">Забронировать дату</a>
+        <a href="#contacts" class="btn-primary">Забронировать дату</a>
         <a href="#packages" class="btn-outline">Посмотреть меню</a>
       </div>
     </div>
@@ -1006,7 +1006,7 @@ footer {
           <li>Морс / компот</li>
           <li>Блин, булочка, мёд, хлеб</li>
         </ul>
-        <a href="#contacts" class="pkg-btn pkg-btn-line" onclick="heroCtaClick(event)">Выбрать этот пакет</a>
+        <a href="#contacts" class="pkg-btn pkg-btn-line">Выбрать этот пакет</a>
       </div>
       <!-- Стандарт -->
       <div class="pkg-card featured">
@@ -1022,7 +1022,7 @@ footer {
           <li>Морс / компот / кисель</li>
           <li>Блин, булочка, мёд, хлеб</li>
         </ul>
-        <a href="#contacts" class="pkg-btn pkg-btn-fill" onclick="heroCtaClick(event)">Выбрать этот пакет</a>
+        <a href="#contacts" class="pkg-btn pkg-btn-fill">Выбрать этот пакет</a>
       </div>
       <!-- Премиум -->
       <div class="pkg-card">
@@ -1037,7 +1037,7 @@ footer {
           <li>Морс / компот / кисель / сок</li>
           <li>Блин, булочка, мёд, хлеб</li>
         </ul>
-        <a href="#contacts" class="pkg-btn pkg-btn-line" onclick="heroCtaClick(event)">Выбрать этот пакет</a>
+        <a href="#contacts" class="pkg-btn pkg-btn-line">Выбрать этот пакет</a>
       </div>
     </div>
 
@@ -1082,7 +1082,7 @@ footer {
         <div class="calc-result-lbl">Итоговая стоимость</div>
         <div class="calc-amount" id="calcResult">15 000 ₽</div>
         <div class="calc-amount-note">Без платы за аренду зала · Без скрытых платежей</div>
-        <a href="#contacts" class="calc-btn" onclick="heroCtaClick(event)">Забронировать →</a>
+        <a href="#contacts" class="calc-btn">Забронировать →</a>
       </div>
     </div>
 
@@ -1167,7 +1167,7 @@ footer {
     <div class="gallery-dots" id="galleryDots"></div>
 
     <div class="gallery-cta">
-      <a href="#contacts" class="btn-primary" style="display:inline-flex;" onclick="heroCtaClick(event)">Забронировать зал</a>
+      <a href="#contacts" class="btn-primary" style="display:inline-flex;">Забронировать зал</a>
     </div>
   </div>
 </section>
@@ -1402,9 +1402,9 @@ footer {
     <div class="contact-inner">
       <div>
         <div class="form-title">Забронировать дату</div>
-        <p class="form-sub">Позвоните нам, чтобы уточнить все детали. Работаем ежедневно с 9:00 до 20:00.</p>
-        <a href="tel:+79123162582" class="btn-primary" style="display:inline-flex; margin-bottom:8px;">Позвонить +7 (912) 316-25-82</a>
-               <div id="bookingForm" style="display:none;">
+        <p class="form-sub">Заполните форму — мы перезвоним в течение 10–15 минут и уточним все детали. Или позвоните сами — работаем ежедневно с 9:00 до 20:00.</p>
+        <a href="tel:+79123162582" class="btn-primary" style="display:inline-flex; margin-bottom:20px;">Позвонить +7 (912) 316-25-82</a>
+        <div id="bookingForm">
           <div class="form-row">
             <div class="field">
               <label for="fName">Ваше имя *</label>
@@ -1516,16 +1516,6 @@ footer {
 </div>
 
 <script>
-// На мобильных (совпадает с брейкпоинтом @media max-width:900px) кнопки бронирования
-// ведут на звонок вместо формы. Номер и формат тот же, что уже используется
-// в других tel:-ссылках на странице — под подмену Calltouch (виджет eoyi6pjb).
-function heroCtaClick(e) {
-  if (window.matchMedia('(max-width: 900px)').matches) {
-    e.preventDefault();
-    window.location.href = 'tel:+79123162582';
-  }
-}
-
 // Calc
 function calcTotal() {
   const pkg = parseInt(document.getElementById('cPkg').value) || 750;
