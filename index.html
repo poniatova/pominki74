@@ -5,9 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Поминальные обеды в Челябинске — Столовая «Дружба»</title>
 <meta name="description" content="Поминальный обед в Челябинске от 650 руб/чел. Отдельный зал, без аренды, своя кухня. Два адреса. Звоните: +7(912)316-25-82">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+  
 /* ─── ICONS ─── */
 .icon {
   width: 1em; height: 1em;
@@ -18,8 +24,8 @@
 
 /* ─── RESET & BASE ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body { font-family: 'Inter', sans-serif; color: #1A1A2E; background: #fff; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
+body { font-family: 'Inter', sans-serif; color: #1A1A2E; background: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
 
@@ -638,8 +644,10 @@ section { padding: 80px 5%; }
   font-family: 'Inter', sans-serif; color: var(--text);
   outline: none; transition: border-color .2s;
   background: var(--white);
+  width: 100%; box-sizing: border-box;
 }
 .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--gold); }
+.field input[type="date"] { text-align: left; -webkit-appearance: none; appearance: none; }
 .field textarea { resize: vertical; min-height: 90px; }
 .form-submit {
   width: 100%; padding: 15px; border-radius: 8px;
@@ -837,6 +845,29 @@ footer {
 }
 </style>
 </head>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+    ym(98894772, 'init', {webvisor:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/98894772" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+ <!-- calltouch -->
+
+<script>
+
+(function(w,d,n,c){w.CalltouchDataObject=n;w[n]=function(){w[n]["callbacks"].push(arguments)};if(!w[n]["callbacks"]){w[n]["callbacks"]=[]}w[n]["loaded"]=false;if(typeof c!=="object"){c=[c]}w[n]["counters"]=c;for(var i=0;i<c.length;i+=1){p(c[i])}function p(cId){var a=d.getElementsByTagName("script")[0],s=d.createElement("script"),i=function(){a.parentNode.insertBefore(s,a)},m=typeof Array.prototype.find === 'function',n=m?"init-min.js":"init.js";s.async=true;s.src="https://mod.calltouch.ru/"+n+"?id="+cId;if(w.opera=="[object Opera]"){d.addEventListener("DOMContentLoaded",i,false)}else{i()}}})(window,document,"ct","eoyi6pjb");
+
+</script>
+
+<!-- calltouch -->
 <body>
 
 <!-- HEADER -->
@@ -1394,8 +1425,9 @@ footer {
     <div class="contact-inner">
       <div>
         <div class="form-title">Забронировать дату</div>
-        <p class="form-sub">Заполните форму — мы перезвоним в течение 10–15 минут и уточним все детали. Работаем ежедневно с 9:00 до 20:00.</p>
-        <div id="bookingForm">
+        <p class="form-sub">Позвоните нам, чтобы уточнить все детали. Работаем ежедневно с 9:00 до 20:00.</p>
+        <a href="tel:+79123162582" class="btn-primary" style="display:inline-flex; margin-bottom:8px;">Позвонить +7 (912) 316-25-82</a>
+               <div id="bookingForm" style="display:none;">
           <div class="form-row">
             <div class="field">
               <label for="fName">Ваше имя *</label>
@@ -1403,7 +1435,7 @@ footer {
             </div>
             <div class="field">
               <label for="fPhone">Номер телефона *</label>
-              <input type="tel" id="fPhone" placeholder="+7 (___) ___-__-__">
+              <input type="tel" id="fPhone" placeholder="+7 (___) ___-__-__" value="+7 ">
             </div>
           </div>
           <div class="form-row">
@@ -1523,7 +1555,12 @@ function closePopup(event) {
   document.getElementById('popupOverlay').classList.remove('show');
 }
 setTimeout(() => {
-  document.getElementById('popupOverlay').classList.add('show');
+  const lastShown = localStorage.getItem('popupShownDate');
+  const today = new Date().toDateString();
+  if (lastShown !== today) {
+    document.getElementById('popupOverlay').classList.add('show');
+    localStorage.setItem('popupShownDate', today);
+  }
 }, 3000);
   
 // Calc
@@ -1557,15 +1594,56 @@ function submitForm() {
     alert('Пожалуйста, подтвердите согласие на обработку персональных данных.');
     return;
   }
-  if (!name || !phone) {
-    alert('Пожалуйста, укажите имя и номер телефона.');
+    const cleanPhone = phone.replace(/\D/g, '');
+  if (!name || cleanPhone.length < 11) {
+    alert('Пожалуйста, укажите имя и полный номер телефона.');
     return;
   }
-  document.getElementById('bookingForm').style.display = 'none';
-  document.getElementById('formSuccess').style.display = 'block';
-  // In production: send to CRM / Telegram bot
-}
 
+  const date = document.getElementById('fDate').value;
+  const guests = document.getElementById('fGuests').value;
+  const pkg = document.getElementById('fPkg').value;
+  const addr = document.getElementById('fAddr').value;
+  const comment = document.getElementById('fComment').value.trim();
+
+  const text = [
+    '📋 <b>Новая заявка с сайта pominki74.ru</b>',
+    '',
+    `👤 <b>Имя:</b> ${name}`,
+    `📞 <b>Телефон:</b> ${phone}`,
+    date ? `📅 <b>Дата:</b> ${date}` : null,
+    guests ? `👥 <b>Гостей:</b> ${guests}` : null,
+    pkg ? `🍽 <b>Пакет:</b> ${pkg}` : null,
+    addr ? `📍 <b>Адрес/доставка:</b> ${addr}` : null,
+    comment ? `💬 <b>Пожелания:</b> ${comment}` : null,
+  ].filter(Boolean).join('\n');
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Отправляем...';
+
+     fetch('https://api.telegram.org/bot8907503061:AAFZNFA0HIS4wULKAWkiE1N-GS6Bw0pyJvw/sendMessage', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: 104033652, text: text, parse_mode: 'HTML' })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.ok) {
+      document.getElementById('bookingForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } else {
+      alert('Не удалось отправить заявку. Позвоните нам: +7(912) 316-25-82');
+      btn.disabled = false;
+      btn.textContent = 'Отправить заявку — перезвоним за 15 минут';
+    }
+  })
+  .catch(() => {
+    alert('Ошибка сети. Позвоните нам: +7(912) 316-25-82');
+    btn.disabled = false;
+    btn.textContent = 'Отправить заявку — перезвоним за 15 минут';
+  });
+}
 // Mobile menu
 function toggleMenu(btn) {
   const nav = document.getElementById('mobileNav');
@@ -1594,15 +1672,15 @@ window.addEventListener('scroll', () => {
 const galleryData = {
   kurchatova: [
     { img: 'gallery/kurchatova-1.jpg', label: 'Вход в столовую' },
-    { img: 'gallery/kurchatova-2.jpg', label: 'Накрытый стол' },
+    { img: 'gallery/kurchatova-2.jpg', label: 'Большой зал' },
     { img: 'gallery/kurchatova-3.jpg', label: 'VIP-зал' },
     { img: 'gallery/kurchatova-4.jpg', label: 'Сервировка' }
   ],
   kirova: [
     { img: 'gallery/kirova-1.jpg', label: 'Вход в столовую' },
     { img: 'gallery/kirova-2.jpg', label: 'Общий вид зала' },
-    { img: 'gallery/kirova-3.jpg', label: 'Сервировка' },
-    { img: 'gallery/kirova-4.jpg', label: 'Пример подачи блюда' }
+    { img: 'gallery/kirova-3.jpg', label: 'Хорошее место 2026' },
+    { img: 'gallery/kirova-4.jpg', label: 'Большой выбор блюд' }
   ]
 };
 let galleryState = 'kurchatova';
